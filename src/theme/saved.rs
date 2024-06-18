@@ -116,6 +116,7 @@ impl SavedTheme {
         let copy_options = fs_extra::dir::CopyOptions {
             overwrite: true,
             skip_exist: false,
+            content_only: true,
             ..Default::default()
         };
 
