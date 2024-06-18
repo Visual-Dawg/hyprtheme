@@ -11,6 +11,7 @@ use expanduser::expanduser;
 use globset::{Glob, GlobSetBuilder};
 use pathdiff::diff_paths;
 use serde::Deserialize;
+use std::fmt::format;
 use std::fs::{self, OpenOptions};
 use std::io::Write;
 use std::path::PathBuf;
@@ -395,7 +396,10 @@ pub async fn get_all(data_dir: Option<&PathBuf>) -> Result<Vec<SavedTheme>> {
         .to_owned();
 
     let themes_dir = data_dir.join("/themes/");
-    let entries = fs::read_dir(themes_dir)?;
+    let entries = fs::read_dir(&themes_dir).context(format!(
+        "Failed to read out themes data directory at: {}",
+        &themes_dir.display()
+    ))?;
 
     let mut themes: Vec<SavedTheme> = vec![];
     for entry in entries {
