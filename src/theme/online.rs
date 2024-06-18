@@ -93,7 +93,7 @@ pub async fn download(
     ))?;
 
     let clone_cmd = format!(
-        "clone --depth 1 {} {} {}",
+        "git clone --depth 1 {} {} {}",
         branch
             .map(|branch_name| "--branch ".to_owned() + branch_name)
             .unwrap_or("".to_owned()),
@@ -101,10 +101,11 @@ pub async fn download(
         &dir_name
     );
 
-    let clone_operation = std::process::Command::new("git")
-        .arg(&clone_cmd)
+    let clone_operation = std::process::Command::new("sh")
+        .arg("-c")
         .stdout(std::process::Stdio::inherit())
         .stderr(std::process::Stdio::inherit())
+        .arg(&clone_cmd)
         .current_dir(&themes_dir)
         .output()
         .context(format!(
