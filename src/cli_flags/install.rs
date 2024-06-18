@@ -77,10 +77,7 @@ impl InstallArgs {
             Some(&self.data_dir),
         )
         .await
-        .unwrap_or({
-            println!("Failed to lookup saved themes! Downloading theme to be safe...");
-            None
-        });
+        .expect("Failed to check if theme is already saved");
 
         let saved_theme = match saved_theme {
             Some(saved) => saved,
@@ -91,7 +88,7 @@ impl InstallArgs {
                     Some(&self.data_dir),
                 )
                 .await
-                .expect("Failed to download theme.");
+                .expect("Failed to download theme");
 
                 println!("Downloaded theme.");
                 downloaded

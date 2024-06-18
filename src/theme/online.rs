@@ -114,7 +114,7 @@ pub async fn download(
         ))?;
 
     if !clone_operation.status.success() {
-        return Err(anyhow!("Failed to clone theme repository."));
+        return Err(anyhow!("Failed to clone theme repository"));
     }
     // parse hyprtheme.toml
     let theme_dir = themes_dir.join(&dir_name);
