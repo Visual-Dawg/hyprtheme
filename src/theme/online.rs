@@ -108,13 +108,10 @@ pub async fn download(
         .arg(&clone_cmd)
         .current_dir(&themes_dir)
         .output()
-        .context(format!(
-            "Failed to clone repository. Command: {}",
-            &clone_cmd
-        ))?;
+        .context(format!("Failed to execute clone. Command: {}", &clone_cmd))?;
 
     if !clone_operation.status.success() {
-        return Err(anyhow!("Failed to clone theme repository"));
+        return Err(anyhow!("Error when cloning theme repository"));
     }
     // parse hyprtheme.toml
     let theme_dir = themes_dir.join(&dir_name);
