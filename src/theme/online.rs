@@ -93,7 +93,7 @@ pub async fn download(
     ))?;
 
     let clone_cmd = format!(
-        "git clone --depth 1 {} {} {}",
+        "clone --depth 1 {} {} {}",
         branch
             .map(|branch_name| "--branch ".to_owned() + branch_name)
             .unwrap_or("".to_owned()),
