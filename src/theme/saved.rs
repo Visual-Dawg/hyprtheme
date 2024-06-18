@@ -126,8 +126,7 @@ impl SavedTheme {
         // makes config more portable
 
         let hyprland_config_path = &hypr_dir.join("hyprland.conf");
-        let hyprtheme_source_str =
-            create_hyrptheme_source_string(&install_dir.join("hyprtheme.conf"));
+        let hyprtheme_source_str = create_hyrptheme_source_string(&hypr_dir);
         // Read out hyprland.conf via std::fs::read_to_string("list.txt").unwrap();
         // Check if hyprtheme.conf is sourced in hyprland.conf, if not, source it
         let is_already_sourced = fs::read_to_string(&hyprland_config_path)
