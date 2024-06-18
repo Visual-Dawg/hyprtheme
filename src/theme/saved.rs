@@ -370,7 +370,7 @@ pub async fn from_directory(path: &PathBuf) -> Result<SavedTheme> {
         return Err(anyhow!("Theme name contains invalid characters. Only latin letters, numbers and '_', '-' are allowed."));
     }
 
-    let hyprtheme_conf_location_relative = &config.hypr.location;
+    let hyprtheme_conf_location_relative = &config.hypr.location.join("hyprtheme.conf");
     let has_hyprtheme_conf = path
         .join(
             hyprtheme_conf_location_relative
