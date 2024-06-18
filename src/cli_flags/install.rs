@@ -43,7 +43,6 @@ impl InstallArgs {
             ThemeName::Featured(theme) => {
                 // There doesn't seem to be a way to determine if a featured theme is already installed
                 // only by it's name, as themes from other repos can have the same name
-
                 // TODO we need to ban featured themes with the same names or handle this case with a prompt again
 
                 let found_theme = online::find_featured(&theme)
@@ -53,7 +52,7 @@ impl InstallArgs {
                         url: theme.repo,
                         branch: theme.branch,
                     })
-                    .expect(format!("Tried to fetch theme {} from featured themes, but could not find it. \nSee https://hyprland-community.org/hyprtheme/browse for all featured themes.", &theme ).as_str());
+                    .expect(format!("Tried to fetch theme {} from featured themes, but could not find it.\nSee https://hyprland-community.org/hyprtheme/browse for all featured themes.\nIf you intended to download a theme from a repo pass its URL as an argument instead.", &theme ).as_str());
 
                 GitUrlBranch {
                     url: found_theme.url,
@@ -80,7 +79,11 @@ impl InstallArgs {
         .expect("Failed to check if theme is already saved");
 
         let saved_theme = match saved_theme {
-            Some(saved) => saved,
+            Some(saved) => {
+                println!("Theme already saved, skipped download.");
+                saved
+            }
+
             None => {
                 let downloaded = theme::online::download(
                     &git_data.url,

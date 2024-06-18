@@ -13,7 +13,7 @@ pub async fn is_theme_installed(theme_id: &ThemeId, config_dir: Option<&PathBuf>
 ///
 /// Example: `source=/home/user/.config/hypr/hyprtheme/hyprtheme.conf`
 pub fn create_hyrptheme_source_string(hypr_dir: &PathBuf) -> String {
-    create_source_string(&PathBuf::from("./hyprtheme/hyprtheme.conf"), hypr_dir)
+    create_source_string(&PathBuf::from("hyprtheme/hyprtheme.conf"), hypr_dir)
 }
 
 /// Create a source string for `hyprlang` files.

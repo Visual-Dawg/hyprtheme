@@ -83,8 +83,8 @@ impl InstalledTheme {
     pub async fn uninstall(self, hypr_dir: Option<&PathBuf>) -> Result<()> {
         let default_dir = &expanduser(DEFAULT_HYPR_CONFIG_PATH)?;
         let hypr_dir = hypr_dir.unwrap_or(default_dir);
-        let hyprtheme_dir = hypr_dir.join("./hyprtheme/");
-        let hyprland_config_path = hypr_dir.join("./hyprland.conf");
+        let hyprtheme_dir = hypr_dir.join("hyprtheme/");
+        let hyprland_config_path = hypr_dir.join("hyprland.conf");
 
         // remove `hyprtheme/` from `hypr` dir
         fs::remove_dir_all(hyprtheme_dir)
