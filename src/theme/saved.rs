@@ -278,6 +278,8 @@ impl SavedTheme {
                             &from.display(),
                             &to.display()
                         ))?;
+
+                    println!("Copied {} to {}", from.display(), to.display());
                 } else {
                     fs_extra::dir::copy(from.as_path(), &to.as_path(), &copy_options_dir).context(
                         format!(
@@ -286,6 +288,7 @@ impl SavedTheme {
                             &to.display()
                         ),
                     )?;
+                    println!("Copied {} to {}", from.display(), to.display());
                 }
             }
         }
