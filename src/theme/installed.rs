@@ -108,6 +108,10 @@ impl InstalledTheme {
             .await
             .context("Error while running cleanup script")?;
 
+        // TODO
+        // What to do with installed dots?
+        // Restore backup?
+
         Ok(())
     }
 
