@@ -121,6 +121,8 @@ impl SavedTheme {
             install_dir.display()
         ))?;
 
+        println!("Copied {} to {}", from_dir.display(), install_dir.display());
+
         // Calculate theme source string, like `source=~/.config/hypr/settings.conf`
         // TODO: replace absolute source path with ~ if possible
         // makes config more portable
