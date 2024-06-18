@@ -1,8 +1,9 @@
-use crate::consts;
-
 use super::{helper::parse_path, install::InstallArgs, list, remove::RemoveArgs};
 use clap::Parser;
 use std::path::PathBuf;
+
+// No default paths for arguments, as those need to be expanded
+// and Clap does not support default functions
 
 #[derive(Parser)]
 #[command(version, name = "hyprtheme")]
