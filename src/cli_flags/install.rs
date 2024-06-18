@@ -1,8 +1,5 @@
 use super::helper::parse_path;
-use crate::{
-    consts,
-    theme::{self, create_theme_id, installed::InstalledTheme, online, saved},
-};
+use crate::theme::{self, create_theme_id, installed::InstalledTheme, online, saved};
 use anyhow::Result;
 use clap::Parser;
 use fancy_regex::RegexBuilder;
@@ -24,12 +21,12 @@ pub struct InstallArgs {
 
     /// The data directory of Hyprtheme by default "~/.local/share/hyprtheme/"
     /// The theme will be saved in the sub-directory "themes"
-    #[arg(short,long,default_value=consts::DEFAULT_DOWNLOAD_PATH,value_parser=parse_path)]
-    pub data_dir: PathBuf,
+    #[arg(short,long,value_parser=parse_path)]
+    pub data_dir: Option<PathBuf>,
 
     /// The path to the the Hyprland config directory, where the theme will be installed to.
-    #[arg(long,default_value=consts::DEFAULT_HYPR_CONFIG_PATH,value_parser=parse_path)]
-    pub hypr_dir: PathBuf,
+    #[arg(long,value_parser=parse_path)]
+    pub hypr_dir: Option<PathBuf>,
 }
 
 impl InstallArgs {
@@ -73,7 +70,7 @@ impl InstallArgs {
 
         let saved_theme = saved::find_saved(
             &create_theme_id(&git_data.url, git_data.branch.as_deref()),
-            Some(&self.data_dir),
+            self.data_dir.as_ref(),
         )
         .await
         .expect("Failed to check if theme is already saved");
@@ -88,7 +85,7 @@ impl InstallArgs {
                 let downloaded = theme::online::download(
                     &git_data.url,
                     git_data.branch.as_deref(),
-                    Some(&self.data_dir),
+                    self.data_dir.as_ref(),
                 )
                 .await
                 .expect("Failed to download theme");
@@ -98,7 +95,7 @@ impl InstallArgs {
             }
         };
 
-        saved_theme.install(Some(&self.hypr_dir)).await
+        saved_theme.install(self.hypr_dir.as_ref()).await
     }
 }
 
