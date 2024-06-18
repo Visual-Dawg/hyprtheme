@@ -115,7 +115,11 @@ pub async fn download(
         .stderr(std::process::Stdio::inherit())
         .current_dir(&themes_dir)
         .arg(&clone_cmd)
-        .output()?;
+        .output()
+        .context(format!(
+            "Failed to clone repository. Command: {}",
+            &clone_cmd
+        ))?;
 
     // parse hyprtheme.toml
     saved::from_directory(&theme_dir).await

@@ -91,7 +91,8 @@ impl InstallArgs {
                     Some(&self.data_dir),
                 )
                 .await
-                .expect("Failed to download theme");
+                .expect("Failed to download theme.");
+
                 println!("Downloaded theme.");
                 downloaded
             }
