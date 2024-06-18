@@ -13,10 +13,10 @@ use std::{
 /// It is an Option type as there might be none installed.
 ///
 /// Optionally a hypr config directory can be given to look it up there.
-pub async fn get(config_dir: Option<&PathBuf>) -> Result<Option<InstalledTheme>> {
+pub async fn get(hypr_dir: Option<&PathBuf>) -> Result<Option<InstalledTheme>> {
     let default_config_dir_bind = &expanduser(DEFAULT_HYPR_CONFIG_PATH)?;
-    let config_dir = config_dir.unwrap_or(default_config_dir_bind);
-    let hyprtheme_toml_path = config_dir.join("./hyprtheme/hyprtheme.toml");
+    let config_dir = hypr_dir.unwrap_or(default_config_dir_bind);
+    let hyprtheme_toml_path = config_dir.join("hyprtheme/hyprtheme.toml");
 
     if !hyprtheme_toml_path.try_exists()? {
         return Ok(None);
