@@ -90,6 +90,8 @@ impl SavedTheme {
             return Ok(());
         }
 
+        println!("Running setup script...");
+
         std::process::Command::new("bash")
             .env("THEME_DIR", &self.path)
             .env("HYPR_INSTALL_DIR", &install_dir)
@@ -380,7 +382,7 @@ pub async fn from_directory(path: &PathBuf) -> Result<SavedTheme> {
 
     if !has_hyprtheme_conf {
         return Err(anyhow!(
-            "hyprtheme.conf is not present in location specified by hyprtheme.toml: {}",
+            "hyprtheme.conf not found. Checked location: {}",
             &hyprtheme_conf_location_relative.display()
         ));
     }

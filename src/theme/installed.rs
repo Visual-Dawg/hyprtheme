@@ -121,7 +121,10 @@ impl InstalledTheme {
             return Ok(());
         }
 
-        std::process::Command::new("bash")
+        println!("Running cleanup script...");
+
+        std::process::Command::new("sh")
+            .arg("-c")
             .env("THEME_DIR", &self.path)
             .env("HYPR_INSTALL_DIR", &install_dir)
             .env("HYPR_CONFIG_DIR", &hypr_dir)
