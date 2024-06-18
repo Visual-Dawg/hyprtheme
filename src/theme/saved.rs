@@ -419,6 +419,8 @@ pub async fn find_saved(
 
 /// Gets all themes saved in the data directory
 pub async fn get_all(data_dir: Option<&PathBuf>) -> Result<Vec<SavedTheme>> {
+    println!("Data-dir: {:#?}", data_dir);
+
     let data_dir: PathBuf = data_dir
         .unwrap_or(&expanduser(DEFAULT_DOWNLOAD_PATH)?)
         .to_owned();
