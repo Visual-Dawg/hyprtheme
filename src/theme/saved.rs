@@ -109,10 +109,6 @@ impl SavedTheme {
     /// And then source it
     fn setup_hyprtheme_hypr_dots(&self, hypr_dir: &PathBuf, install_dir: &PathBuf) -> Result<()> {
         let from_dir = &self.path.join(&self.config.hypr.location);
-        let install_dir = PathBuf::from(
-            &install_dir.to_string_lossy()
-                [..(*install_dir).clone().to_string_lossy().len() as usize - 1],
-        );
         let copy_options = fs_extra::dir::CopyOptions {
             overwrite: true,
             skip_exist: false,
