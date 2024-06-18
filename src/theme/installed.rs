@@ -27,8 +27,9 @@ pub async fn get(hypr_dir: Option<&PathBuf>) -> Result<Option<InstalledTheme>> {
         &hyprtheme_toml_path.display()
     ))?;
     let config = serde_json::from_str::<ParsedThemeConfig>(&toml_string).context(format!(
-        "Failed to parse hyprtheme.toml at: {}",
-        &hyprtheme_toml_path.display()
+        "Failed to parse hyprtheme.toml at: {}.\nFile:\n{}",
+        &hyprtheme_toml_path.display(),
+        &toml_string
     ))?;
 
     Ok(Some(InstalledTheme {
