@@ -1,6 +1,6 @@
 use super::saved::{self, SavedTheme};
 use crate::consts::DEFAULT_DOWNLOAD_PATH;
-use anyhow::{Context, Result};
+use anyhow::{anyhow, Context, Result};
 use expanduser::expanduser;
 use reqwest::Client;
 use serde::Deserialize;
@@ -101,7 +101,7 @@ pub async fn download(
         &dir_name
     );
 
-    std::process::Command::new("git")
+    let clone_operation = std::process::Command::new("git")
         .arg(&clone_cmd)
         .stdout(std::process::Stdio::inherit())
         .stderr(std::process::Stdio::inherit())
@@ -112,6 +112,9 @@ pub async fn download(
             &clone_cmd
         ))?;
 
+    if !clone_operation.status.success() {
+        return Err(anyhow!("Failed to clone theme repository."));
+    }
     // parse hyprtheme.toml
     let theme_dir = themes_dir.join(&dir_name);
     saved::from_directory(&theme_dir).await
