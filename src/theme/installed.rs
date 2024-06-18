@@ -22,8 +22,14 @@ pub async fn get(hypr_dir: Option<&PathBuf>) -> Result<Option<InstalledTheme>> {
         return Ok(None);
     }
 
-    let toml_string = fs::read_to_string(hyprtheme_toml_path)?;
-    let config = serde_json::from_str::<ParsedThemeConfig>(&toml_string)?;
+    let toml_string = fs::read_to_string(&hyprtheme_toml_path).context(format!(
+        "Failed to read out hyprtheme.toml at: {}",
+        &hyprtheme_toml_path.display()
+    ))?;
+    let config = serde_json::from_str::<ParsedThemeConfig>(&toml_string).context(format!(
+        "Failed to parse hyprtheme.toml at: {}",
+        &hyprtheme_toml_path.display()
+    ))?;
 
     Ok(Some(InstalledTheme {
         path: config_dir.clone(),
