@@ -99,9 +99,7 @@ impl InstalledTheme {
         let is_already_sourced = hyprland_config.contains(&hyprtheme_source_str);
 
         if is_already_sourced {
-            let config_str = fs::read_to_string(&hyprland_config)
-                .context("Failed to read out hyprland.conf to remove source line")?
-                .replace(&hyprtheme_source_str.to_string(), "");
+            let config_str = hyprland_config.replace(&hyprtheme_source_str.to_string(), "");
 
             fs::write(hyprland_config_path, config_str)?;
         }
