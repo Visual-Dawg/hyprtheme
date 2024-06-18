@@ -371,12 +371,13 @@ pub async fn from_directory(path: &PathBuf) -> Result<SavedTheme> {
     }
 
     let hyprtheme_conf_location_relative = &config.hypr.location.join("hyprtheme.conf");
-    let has_hyprtheme_conf = path
-        .join(
-            hyprtheme_conf_location_relative
-                .strip_prefix("./")
-                .unwrap_or(&hyprtheme_conf_location_relative),
-        )
+    let hyprtheme_conf_location_relative = hyprtheme_conf_location_relative
+        .strip_prefix("./")
+        .unwrap_or(&hyprtheme_conf_location_relative);
+
+    let hyprtheme_conf_location_absolute = path.join(&hyprtheme_conf_location_relative);
+
+    let has_hyprtheme_conf = hyprtheme_conf_location_absolute
         .try_exists()
         .context("Failed to check if hyprtheme.conf is present in theme")?;
 
