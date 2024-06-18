@@ -39,7 +39,7 @@ pub enum CliFlags {
 
 #[derive(Parser)]
 pub struct UninstallArgs {
-    #[arg(short,long,value_parser=parse_path)]
+    #[arg(long,value_parser=parse_path)]
     pub hypr_dir: Option<PathBuf>,
 }
 
