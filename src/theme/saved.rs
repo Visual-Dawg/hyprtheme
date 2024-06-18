@@ -48,8 +48,8 @@ impl SavedTheme {
         let _ = fs::create_dir_all(install_dir)
             .context("Failed to create hyprtheme subdirectory in hypr config direcotry.")?;
 
-        let _ = &self.setup_dots(&hypr_dir, install_dir).await?;
         let _ = setup_theme_variables(&hypr_dir)?;
+        let _ = &self.setup_dots(&hypr_dir, install_dir).await?;
         let _ = &self.run_setup_script(install_dir, &hypr_dir).await?;
 
         // Copy over the hyprtheme.toml, which gets used to determine which theme is currently installed
@@ -374,7 +374,6 @@ pub async fn from_directory(path: &PathBuf) -> Result<SavedTheme> {
     let hyprtheme_conf_location_relative = hyprtheme_conf_location_relative
         .strip_prefix("./")
         .unwrap_or(&hyprtheme_conf_location_relative);
-
     let hyprtheme_conf_location_absolute = path.join(&hyprtheme_conf_location_relative);
 
     let has_hyprtheme_conf = hyprtheme_conf_location_absolute
@@ -475,7 +474,7 @@ fn setup_theme_variables(hypr_dir: &PathBuf) -> Result<()> {
 
     if !is_already_sourced {
         // Append the source line
-        prepend_to_file(&file_path, &variables_source_str)?;
+        prepend_to_file(&hyprland_config_path, &variables_source_str)?;
     }
 
     Ok(())

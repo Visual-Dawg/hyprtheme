@@ -1,5 +1,5 @@
 use super::installed;
-use anyhow::Result;
+use anyhow::{Context, Result};
 use std::{fs, path::PathBuf};
 
 /// Check if a theme is installed by its repo url.
@@ -34,11 +34,19 @@ pub fn create_theme_id(repo: &str, branch: Option<&str>) -> ThemeId {
 }
 
 /// Prepend text to a file.
-/// Dont forget to add a newline if necessary
+///
+/// Also adds a newline to the end of the added content.
 pub fn prepend_to_file(file_path: &PathBuf, contents: &str) -> Result<()> {
-    let new_contents = format!("{}{}", contents, fs::read_to_string(file_path)?);
+    let new_contents = format!(
+        "{}\n{}",
+        contents,
+        fs::read_to_string(file_path).context(format!(
+            "Failed to read out file to prepend to at: {}",
+            file_path.display()
+        ))?
+    );
 
-    fs::write(file_path, new_contents)?;
+    fs::write(file_path, new_contents).context("Failed to write prepended file.")?;
 
     Ok(())
 }
