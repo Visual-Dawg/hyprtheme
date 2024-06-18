@@ -395,7 +395,7 @@ pub async fn get_all(data_dir: Option<&PathBuf>) -> Result<Vec<SavedTheme>> {
         .unwrap_or(&expanduser(DEFAULT_DOWNLOAD_PATH)?)
         .to_owned();
 
-    let themes_dir = data_dir.join("/themes/");
+    let themes_dir = data_dir.join("themes/");
     let entries = fs::read_dir(&themes_dir).context(format!(
         "Failed to read out themes data directory at: {}",
         &themes_dir.display()
